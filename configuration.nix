@@ -3,14 +3,14 @@
 {
   imports = [
     ./hardware-configuration.nix
-    "./hosts/${(builtins.fromJSON (builtins.readFile ./host.json).name)}.nix"
+    "/etc/nixos/hosts/${(builtins.fromJSON (builtins.readFile ./host.json)).name}.nix"
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
 
   system.stateVersion = "19.09";
   
   boot = {
-    kernalPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -36,8 +36,8 @@
   i18n = {
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "fr";
-    defaultLocale = "fr_Fr.UTF-8";
-    supportedLocales = [ "en_US.UTF-8/UTF-8" "fr_Fr.UTF-8/UTF-8" ];
+    defaultLocale = "fr_FR.UTF-8";
+    supportedLocales = [ "en_US.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" ];
   };
 
   time.timeZone = "Europe/Paris";
