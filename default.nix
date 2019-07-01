@@ -1,11 +1,17 @@
 host:
 { config, lib, pkgs, ... }:
 
+let
+  homeManagerThunk = builtins.fromJSON (builtins.readFile /etc/nixos/home-manager.json);
+in
 {
   imports = [
     /etc/nixos/hardware-configuration.nix
     "${./.}/hosts/${host}.nix"
-    "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
+    "${builtins.fetchTarball {
+      url = "https://github.com/rycee/home-manager/archive/${homeManagerThunk.rev}.tar.gz";
+      sha256 = homeManagerThunk.sha256;
+    }}/nixos"
   ];
 
   system.stateVersion = "19.09";
