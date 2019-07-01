@@ -18,7 +18,8 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  
+
+  home-manager.users.romain = import ./home;
   users.users.romain = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" "networkmanager" ];
