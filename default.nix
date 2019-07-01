@@ -55,8 +55,11 @@ in
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
+    firefox
     git
     gotop
+    inkscape
+    krita
     nix-prefetch-git
   ];
 
