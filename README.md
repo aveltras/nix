@@ -18,3 +18,5 @@ in import (builtins.fetchTarball {
 ```
 
 The last argument (here **clevo-N141ZU**) should correspond to a physical machine specific configuration file in the "hosts" directory.
+
+You can then run `sudo nixos-rebuild switch` as usual.
