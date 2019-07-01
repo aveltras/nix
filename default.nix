@@ -26,6 +26,10 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  environment.shellAliases = {
+    "update-nix" = "sudo -- sh -c 'nix-prefetch-git https://github.com/aveltras/nix > /etc/nixos/nix.json; nix-prefetch-git https://github.com/rycee/home-manager > /etc/nixos/home-manager.json'";
+  };
+  
   home-manager.users.romain = import ./home;
   users.users.romain = {
     isNormalUser = true;
@@ -53,6 +57,7 @@ in
   environment.systemPackages = with pkgs; [
     git
     gotop
+    nix-prefetch-git
   ];
 
   fonts.fonts = with pkgs; [

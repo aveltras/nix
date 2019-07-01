@@ -1,10 +1,13 @@
 # Usage
 
-```bash
-sudo nix-shell -p nix-prefetch-git --run "nix-prefetch-git https://github.com/aveltras/nix > /etc/nixos/nix.json && nix-prefetch-git https://github.com/rycee/home-manager > /etc/nixos/home-manager.json"
-```
+On the first run, you'll have to use this command to fetch the latest info for the necessary github repos:
 
-Switch the content of your **/etc/nixos/configuration.nix** to :
+```bash
+sudo -- sh -c 'nix-prefetch-git https://github.com/aveltras/nix > /etc/nixos/nix.json; nix-prefetch-git https://github.com/rycee/home-manager > /etc/nixos/home-manager.json'
+```
+Once configured via this repo, the shell alias **update-nix** will do the same.
+
+Next, switch the content of your **/etc/nixos/configuration.nix** to:
 
 ```nix
 let thunk = builtins.fromJSON (builtins.readFile /etc/nixos/nix.json);
