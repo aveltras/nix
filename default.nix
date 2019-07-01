@@ -3,8 +3,8 @@ host:
 
 {
   imports = [
-    ./hardware-configuration.nix
-    "/etc/nixos/hosts/${host}.nix"
+    /etc/nixos/hardware-configuration.nix
+    "${./.}/hosts/${host}.nix"
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
 
