@@ -10,7 +10,7 @@ Switch the content of your **/etc/nixos/configuration.nix** to :
 let thunk = builtins.fromJSON (builtins.readFile /etc/nixos/nix.json);
 in import (builtins.fetchTarball {
      url = "https://github.com/aveltras/nix/archive/${thunk.rev}.tar.gz";
-	 sha256 = thunk.sha256;
+     sha256 = thunk.sha256;
    }) "clevo-N141ZU"
 ```
 
