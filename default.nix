@@ -1,9 +1,10 @@
+host:
 { config, lib, pkgs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    "/etc/nixos/hosts/${(builtins.fromJSON (builtins.readFile ./host.json)).name}.nix"
+    "/etc/nixos/hosts/${host}.nix"
     "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos"
   ];
 
