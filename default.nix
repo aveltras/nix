@@ -55,6 +55,7 @@ in
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
+    emacs
     firefox
     git
     gotop
