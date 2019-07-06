@@ -1,40 +1,42 @@
 { config, pkgs, ... }:
 
+let
+  iconTheme = builtins.fetchTarball {
+    url = "https://github.com/vinceliuice/Tela-icon-theme/archive/2019_06_28.tar.gz"; 
+    sha256 = "0p7fac2hg44sdpw7g2hdfivs0j1b350v9gplajzddd770qn4yba8";
+  };
+in
 {
-  home.file.".background-image".source = ./wallpapers/mountains-on-mars.png;
+  home.file.".background-image".source = ./assets/images/W_2014_351_SOFTBOX_III.jpg;
+  home.file.".config/rofi/config.rasi".source = ./dotfiles/rofi/config.rasi;
 
-  /*dconf.settings = {
-    "org/gnome/desktop/background" = {
-      "picture-uri" = "file:///home/romain/.background-image";
-    };
+  /*home.file.".local/share/icons/tela" = {
+    source = "${iconTheme}/src";
+    recursive = true;
   };*/
 
-/*  xsession = {
-    enable = true;
-    windowManager.xmonad = {
+  services = {
+    redshift = {
       enable = true;
-      enableContribAndExtras = true;
-      config = pkgs.writeText "xmonad.hs" ''
-        import XMonad
-        main = xmonad def { modMask = mod4Mask, terminal = "alacritty" }
-      '';
+      latitude = "45.75";
+      longitude  = "4.85";
+      temperature = {
+        day = 5000;
+        night = 3250;
+      };
     };
-  };*/
-
-  services.redshift = {
-    enable = true;
-    latitude = "45.75";
-    longitude  = "4.85";
-    temperature = {
-      day = 5000;
-      night = 3250;
+    screen-locker = {
+      enable = true;
+      xautolockExtraOptions = [
+        "-corners" "+0-0"
+      ];
     };
+    unclutter.enable = true;
   };
   
   programs = {
     home-manager.enable = true;
-    #alacritty.enable = true;
-    fish.enable = true;
+    direnv.enable = true;
     git = {
       enable = true;
       userName = "Romain Viallard";

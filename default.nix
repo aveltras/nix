@@ -33,7 +33,6 @@ in
   home-manager.users.romain = import ./home;
   users.users.romain = {
     isNormalUser = true;
-    shell = pkgs.fish;
     extraGroups = [ "wheel" "audio" "video" "networkmanager" ];
   };
   
@@ -50,57 +49,40 @@ in
     consoleFont = "Lat2-Terminus16";
     consoleKeyMap = "fr";
     defaultLocale = "fr_FR.UTF-8";
-    supportedLocales = [ "en_US.UTF-8/UTF-8" "fr_FR.UTF-8/UTF-8" ];
+    supportedLocales = [ "fr_FR.UTF-8/UTF-8" ];
   };
 
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
     alacritty
-    dmenu
     emacs
     firefox
     git
     gotop
     inkscape
     krita
-    #xorg.xbacklight
     nix-prefetch-git
+    redshift
     rofi
-    rxvt_unicode
+    scrot
     haskellPackages.xmobar
   ];
 
   fonts.fonts = with pkgs; [
     fantasque-sans-mono
-    font-awesome
     iosevka-bin
   ];
 
   sound.enable = true;
-  #sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
 
   programs.light.enable = true;
   services.actkbd = {
     enable = true;
     bindings = [
-
-      # Lower Brightness
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 5"; }
-
-      # Increase Brightness
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 5"; }
-
-      # "Mute" media key
-      # { keys = [ 113 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pactl set-sink-mute 0 toggle"; }
-
-      # "Lower Volume" media key
-      # { keys = [ 114 ]; events = [ "key" "rep" ]; command = "/run/current-system/sw/bin/pactl set-sink-volume 0 +3%"; }
-
-      # "Raise Volume" media key
-      # { keys = [ 115 ]; events = [ "key" "rep" ]; command = "/run/current-system/sw/bin/pactl set-sink-volume 0 +3%"; }
-
+      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 1"; } # Lower brightness
+      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 1"; } # Increase brightness
     ];
   };
   
@@ -114,40 +96,24 @@ in
       enable = true;
       enableContribAndExtras = true;
     };
-    displayManager.slim = {
+    displayManager.lightdm = {
       enable = true;
-      defaultUser = "romain";
+      background = "${pkgs.nixos-artwork.wallpapers.stripes-logo}/share/artwork/gnome/nix-wallpaper-stripes-logo.png";
+      greeters.mini = {
+        enable = true;
+        user = "romain";
+        extraConfig = ''
+          [greeter]
+          show-password-label = false
+          [greeter-theme]
+          text-color = "#F5F6F7"
+          error-color = "#FF9A8F"
+          window-color = "#2A6D95"
+          border-color = "#50A2AF"
+          password-color = "#F5F6F7"
+          password-background-color = "#1E4E6A"
+        '';
+      };
     };
-    /*desktopManager.gnome3.enable = true;
-    displayManager.gdm = {
-      enable = true;
-      wayland = false;
-    };*/
   };
-  
-  /*environment.gnome3.excludePackages = with pkgs.gnome3; (lib.lists.subtractLists [
-    gnome-terminal
-    gnome-tweaks
-    nautilus
-  ] optionalPackages);
-
-  services.gnome3 = {
-    evolution-data-server.enable = lib.mkForce false;
-    gnome-disks.enable = lib.mkForce false;
-    gnome-documents.enable = lib.mkForce false;
-    # gnome-keyring.enable = lib.mkForce false;
-    gnome-online-accounts.enable = lib.mkForce false;
-    gnome-online-miners.enable = lib.mkForce false;
-    gnome-remote-desktop.enable = lib.mkForce false;
-    gnome-user-share.enable = lib.mkForce false;
-    gpaste.enable = lib.mkForce false;
-    gvfs.enable = lib.mkForce false;
-    rygel.enable = lib.mkForce false;
-    seahorse.enable = lib.mkForce false;
-    sushi.enable = lib.mkForce false;
-    tracker.enable = lib.mkForce false;
-    tracker-miners.enable = lib.mkForce false;
-  };*/
-
-  
 }
