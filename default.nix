@@ -69,10 +69,13 @@ in
     haskellPackages.xmobar
   ];
 
-  fonts.fonts = with pkgs; [
-    fantasque-sans-mono
-    iosevka-bin
-  ];
+  fonts = {
+    fontconfig.enable = true;
+    fonts = with pkgs; [
+      fantasque-sans-mono
+      iosevka-bin
+    ];
+  };
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
