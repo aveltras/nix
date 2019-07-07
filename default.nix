@@ -86,7 +86,8 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   sound.mediaKeys.enable = true;
-  
+
+  programs.zsh.enable = true;
   programs.light.enable = true;
   services.actkbd = {
     enable = true;
