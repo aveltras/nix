@@ -67,10 +67,10 @@ in
 
   home.keyboard.layout = "fr";
   
-  home.packages = with pkgs; [
-    feh
-    haskellPackages.xmobar
-  ];
+  # home.packages = with pkgs; [
+  #   feh
+  #   haskellPackages.xmobar
+  # ];
   
   programs = {
     home-manager.enable = true;
@@ -89,15 +89,15 @@ in
     };
   };
   
-  services = {
+  # services = {
     # screen-locker = {
     #   enable = true;
     #   xautolockExtraOptions = [
     #     "-corners" "+0-0"
     #   ];
     # };
-    unclutter.enable = true;
-  };
+    # unclutter.enable = true;
+  # };
 
   # xresources.extraConfig = ''
     

@@ -71,8 +71,6 @@ in
     j4-dmenu-desktop
     krita
     nix-prefetch-git
-    rofi
-    scrot
   ];
 
   fonts = {
@@ -85,20 +83,19 @@ in
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-  sound.mediaKeys.enable = true;
 
   programs.zsh.enable = true;
   programs.light.enable = true;
-  services.actkbd = {
-    enable = true;
-    bindings = [
-      # { keys = [ 113 ]; events = [ "key" ]; command = "pactl set-sink-volume 0 toggle"; } # Toggle sound
-      # { keys = [ 114 ]; events = [ "key" "rep" ]; command = "pactl set-sink-volume 0 -1%"; } # Lower volume
-      # { keys = [ 115 ]; events = [ "key" "rep" ]; command = "pactl set-sink-volume 0 +1%"; } # Increase volume
-      { keys = [ 224 ]; events = [ "key" ]; command = "light -U 1"; } # Lower brightness
-      { keys = [ 225 ]; events = [ "key" ]; command = "light -A 1"; } # Increase brightness
-    ];
-  };
+  # services.actkbd = {
+  #   enable = true;
+  #   bindings = [
+  #     # { keys = [ 113 ]; events = [ "key" ]; command = "pactl set-sink-volume 0 toggle"; } # Toggle sound
+  #     # { keys = [ 114 ]; events = [ "key" "rep" ]; command = "pactl set-sink-volume 0 -1%"; } # Lower volume
+  #     # { keys = [ 115 ]; events = [ "key" "rep" ]; command = "pactl set-sink-volume 0 +1%"; } # Increase volume
+  #     { keys = [ 224 ]; events = [ "key" ]; command = "light -U 1"; } # Lower brightness
+  #     { keys = [ 225 ]; events = [ "key" ]; command = "light -A 1"; } # Increase brightness
+  #   ];
+  # };
 
   services.redshift = {
     enable = true;
