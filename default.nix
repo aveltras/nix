@@ -38,6 +38,7 @@ in
   users.users.romain = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" "networkmanager" ];
+    shell = pkgs.zsh;
   };
   
   networking.networkmanager = {
