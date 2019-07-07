@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "backlight", "battery", "pulseaudio", "clock"],
+    "modules-right": ["network", "backlight", "battery", "pulseaudio", "idle_inhibitor", "clock"],
     "sway/window": {
         "max-length": 50
     },
@@ -21,6 +21,13 @@
     "clock": {
         "format": "{:%a %d. %b  %H:%M}",
 	"tooltip": false
+    },
+   "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     },
     "network": {
         "interface": "wlp3s0",

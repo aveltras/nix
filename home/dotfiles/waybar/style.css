@@ -24,7 +24,7 @@ window#waybar {
     border-bottom: 3px solid #FF5500;
 }
 
-#mode, #clock, #battery, #network, #pulseaudio, #backlight {
+#mode, #clock, #battery, #network, #pulseaudio, #backlight, #idle_inhibitor {
     padding: 0 8px;
 }
 
