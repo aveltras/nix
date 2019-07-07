@@ -74,7 +74,10 @@ in
   
   programs = {
     home-manager.enable = true;
-    direnv.enable = true;
+    direnv = {
+      enable = true;
+      stdlib = pkgs.lib.fileContents ./dotfiles/direnvrc;
+    };
     git = {
       enable = true;
       userName = "Romain Viallard";
