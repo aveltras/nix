@@ -12,37 +12,36 @@ let
 in
 {
   home.file.".background-image".source = ./assets/images/W_2014_351_SOFTBOX_III.jpg;
-  home.file.".config/rofi/config.rasi".source = ./dotfiles/rofi/config.rasi;
+  #home.file.".config/rofi/config.rasi".source = ./dotfiles/rofi/config.rasi;
   home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
   home.file.".local/share/fonts/exo2" = {
     source = "${exo2}";
     recursive = true;
   };
-  home.file.".xmonad/xmonad.hs".source = ./dotfiles/xmonad/xmonad.hs;
-  home.file.".xmobar/xmobar.hs".source = ./dotfiles/xmobar/xmobar.hs;
+
+  home.file.".config/sway" = {
+    source = ./dotfiles/sway;
+    recursive = true;
+  };
+
+  home.file.".config/waybar" = {
+    source = ./dotfiles/waybar;
+    recursive = true;
+  };
+    
+  # home.file.".xmonad/xmonad.hs".source = ./dotfiles/xmonad/xmonad.hs;
+  # home.file.".xmobar/xmobar.hs".source = ./dotfiles/xmobar/xmobar.hs;
   /*home.file.".local/share/icons/tela" = {
     source = "${iconTheme}/src";
     recursive = true;
   };*/
 
-  services = {
-    redshift = {
-      enable = true;
-      latitude = "45.75";
-      longitude  = "4.85";
-      temperature = {
-        day = 5000;
-        night = 3250;
-      };
-    };
-    screen-locker = {
-      enable = true;
-      xautolockExtraOptions = [
-        "-corners" "+0-0"
-      ];
-    };
-    unclutter.enable = true;
-  };
+  home.keyboard.layout = "fr";
+  
+  home.packages = with pkgs; [
+    feh
+    haskellPackages.xmobar
+  ];
   
   programs = {
     home-manager.enable = true;
@@ -53,4 +52,30 @@ in
       userEmail = "romain.viallard@outlook.fr";
     };
   };
+  
+  services = {
+    # screen-locker = {
+    #   enable = true;
+    #   xautolockExtraOptions = [
+    #     "-corners" "+0-0"
+    #   ];
+    # };
+    unclutter.enable = true;
+  };
+
+  # xresources.extraConfig = ''
+    
+  # '';
+  
+  # xsession = {
+  #   enable = true;
+  #   initExtra = ''
+  #     feh --bg-scale /home/romain/.background-image
+  #   '';
+  #   windowManager.xmonad = {
+  #     config = ./dotfiles/xmonad/xmonad.hs;
+  #     enable = true;
+  #     enableContribAndExtras = true;
+  #   };
+  # };
 }
