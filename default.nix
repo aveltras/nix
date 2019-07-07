@@ -112,7 +112,9 @@ in
   programs.sway = {
     enable = true;
     extraPackages = with pkgs; [
+      grim
       redshift-wayland
+      slurp
       swaybg
       swayidle
       swaylock

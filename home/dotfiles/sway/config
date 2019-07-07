@@ -15,6 +15,8 @@ set $menu j4-dmenu-desktop \
 # Wallpaper
 output * bg ~/.background-image fill
 
+seat * hide_cursor 5000
+
 # Fn Keys
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +1%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -1%
@@ -28,6 +30,10 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
+
+# Screenshots
+bindsym print exec mkdir -p ~/Screenshots && grim ~/Screenshots/$(date +'%Y-%m-%d-%H%M%S_grim.png') # Fullscreen
+bindsym $mod+print exec mkdir -p ~/Screenshots && grim -g "$(slurp)" ~/Screenshots/$(date +'%Y-%m-%d-%H%M%S_grim.png') # Region
 
 # Move focus
 bindsym $mod+Left focus left
