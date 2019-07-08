@@ -57,7 +57,9 @@ in
     source = ./dotfiles/waybar;
     recursive = true;
   };
-    
+
+  home.file.".emacs.d/init.el".source = ./dotfiles/emacs/init.el;
+  
   # home.file.".xmonad/xmonad.hs".source = ./dotfiles/xmonad/xmonad.hs;
   # home.file.".xmobar/xmobar.hs".source = ./dotfiles/xmobar/xmobar.hs;
   /*home.file.".local/share/icons/tela" = {
