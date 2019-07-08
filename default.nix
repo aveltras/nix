@@ -76,6 +76,7 @@ in
     j4-dmenu-desktop
     krita
     nix-prefetch-git
+    pavucontrol
   ];
 
   fonts = {

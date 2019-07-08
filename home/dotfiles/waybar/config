@@ -27,7 +27,8 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        }
+        },
+	"tooltip": false
     },
     "network": {
         "interface": "wlp3s0",
@@ -41,20 +42,14 @@
     },
     "pulseaudio": {
     	"format": "{icon} {volume}%",
-	"format-bluetooth": "{volume}% {icon}",
+	"format-bluetooth": "{icon} {volume}%",
 	"format-muted": "",
 	"format-icons": {
-	    "headphones": "",
-	    "handsfree": "",
-	    "headset": "",
-	    "phone": "",
-	    "portable": "",
-	    "car": "",
 	    "default": ["", ""]
 	 },
 	"tooltip": false,
-    	"on-click": "pactl set-sink-mute 0 toggle",
-	"on-scroll-up": "pactl set-sink-volume 0 +1%",
-	"on-scroll-down": "pactl set-sink-volume 0 -1%"
+    	"on-click": "pavucontrol",
+	"on-scroll-up": "pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +1%",
+	"on-scroll-down": "pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -1%"
     }
 }
