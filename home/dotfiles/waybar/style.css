@@ -13,15 +13,16 @@ window#waybar {
 }
 
 #workspaces button {
-    padding: 2px 5px;
+    padding: 5px 10px;
     background: transparent;
-    color: #EFEFEF;
+    color: #6f818c;
     border-bottom: 3px solid transparent;
 }
 
 #workspaces button.focused {
-    background: #64727D;
+    background: #343c41;
     border-bottom: 3px solid #FF5500;
+    color: #EFEFEF;
 }
 
 #mode, #clock, #battery, #network, #pulseaudio, #backlight, #idle_inhibitor {

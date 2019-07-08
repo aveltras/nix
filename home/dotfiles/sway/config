@@ -25,7 +25,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id light -U 1
 bindsym XF86MonBrightnessUp exec --no-startup-id light -A 1
 
 # General
-bindsym $mod+Return exec $term
+bindsym $mod+Return exec $term; workspace $ws3
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+c reload
@@ -47,29 +47,46 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# Workspace definition
+set $ws1   1: 
+set $ws2   2: 
+set $ws3   3: 
+set $ws4   4
+set $ws5   5
+set $ws6   6
+set $ws7   7
+set $ws8   8
+set $ws9   9
+set $ws0  10
+
 # Switch to workspace
-bindsym $mod+ampersand workspace 1
-bindsym $mod+eacute workspace 2
-bindsym $mod+quotedbl workspace 3
-bindsym $mod+apostrophe workspace 4
-bindsym $mod+parenleft workspace 5
-bindsym $mod+minus workspace 6
-bindsym $mod+egrave workspace 7
-bindsym $mod+underscore workspace 8
-bindsym $mod+ccedilla workspace 9
-bindsym $mod+agrave workspace 10
+bindsym $mod+ampersand workspace $ws1
+bindsym $mod+eacute workspace $ws2
+bindsym $mod+quotedbl workspace $ws3
+bindsym $mod+apostrophe workspace $ws4
+bindsym $mod+parenleft workspace $ws5
+bindsym $mod+minus workspace $ws6
+bindsym $mod+egrave workspace $ws7
+bindsym $mod+underscore workspace $ws8
+bindsym $mod+ccedilla workspace $ws9
+bindsym $mod+agrave workspace $ws10
 
 # Move focused container to workspace
-bindsym $mod+Shift+ampersand move container to workspace 1
-bindsym $mod+Shift+eacute move container to workspace 2
-bindsym $mod+Shift+quotedbl move container to workspace 3
-bindsym $mod+Shift+apostrophe move container to workspace 4
-bindsym $mod+Shift+parenleft move container to workspace 5
-bindsym $mod+Shift+minus move container to workspace 6
-bindsym $mod+Shift+egrave move container to workspace 7
-bindsym $mod+Shift+underscore move container to workspace 8
-bindsym $mod+Shift+ccedilla move container to workspace 9
-bindsym $mod+Shift+agrave move container to workspace 10
+bindsym $mod+Shift+ampersand move container to workspace $ws1
+bindsym $mod+Shift+eacute move container to workspace $ws2
+bindsym $mod+Shift+quotedbl move container to workspace $ws3
+bindsym $mod+Shift+apostrophe move container to workspace $ws4
+bindsym $mod+Shift+parenleft move container to workspace $ws5
+bindsym $mod+Shift+minus move container to workspace $ws6
+bindsym $mod+Shift+egrave move container to workspace $ws7
+bindsym $mod+Shift+underscore move container to workspace$ws 8
+bindsym $mod+Shift+ccedilla move container to workspace $ws9
+bindsym $mod+Shift+agrave move container to workspace $ws10
+
+# Specific workspace assignments
+assign [class="^$Firefox"] $ws1
+assign [class="^Emacs$"] $ws2
+assign [app_id="Alacritty"] $ws3
 
 # Resizing
 bindsym $mod+Prior resize grow width 20px
