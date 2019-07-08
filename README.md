@@ -36,3 +36,6 @@ Then to rebuild using this temporary configuration:
 ```bash
 sudo nixos-rebuild switch -I nixos-config=/etc/nixos/configuration-local.nix
 ```
+
+## Preview
+![](preview.png)
