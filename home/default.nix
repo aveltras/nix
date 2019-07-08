@@ -71,6 +71,10 @@ in
   #   feh
   #   haskellPackages.xmobar
   # ];
+
+  home.sessionVariables = {
+    EDITOR = "emacsclient";
+  };
   
   programs = {
     home-manager.enable = true;

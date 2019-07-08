@@ -26,14 +26,20 @@ in
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    plymouth.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;
 
+  environment.loginShellInit = ''
+    if [ "$(tty)" = "/dev/tty1" ]; then
+    	exec sway
+    fi
+  '';
   environment.shellAliases = {
     "update-nix" = "sudo -- sh -c 'nix-prefetch-git https://github.com/aveltras/nix > /etc/nixos/nix.json; nix-prefetch-git https://github.com/rycee/home-manager > /etc/nixos/home-manager.json'";
   };
-  
+
   home-manager.users.romain = import ./home;
   users.users.romain = {
     isNormalUser = true;
@@ -63,7 +69,6 @@ in
     alacritty
     bemenu
     cachix
-    emacs
     firefox
     git
     gotop
@@ -84,6 +89,17 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  services.udisks2.enable = true;
+
+  services.emacs = {
+    enable = true;
+    package = (pkgs.emacs.overrideAttrs (attrs: {
+      postInstall = (attrs.postInstall or "") + ''
+        rm $out/share/applications/emacs.desktop
+      '';
+    }));
+  };
+  
   programs.zsh.enable = true;
   programs.light.enable = true;
   # services.actkbd = {

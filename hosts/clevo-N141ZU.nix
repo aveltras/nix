@@ -11,6 +11,9 @@
     extraModules = [ pkgs.pulseaudio-modules-bt ];
   };
 
+  hardware.cpu.intel.updateMicrocode = true;
+  services.fstrim.enable = true;
+  
   hardware.bluetooth = {
     enable = true;
     extraConfig = ''
