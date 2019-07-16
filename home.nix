@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   iconTheme = builtins.fetchTarball {
@@ -15,9 +15,8 @@ let
   };
 in
 {
-  home.file.".background-image".source = ./assets/images/W_2014_351_SOFTBOX_III.jpg;
-  #home.file.".config/rofi/config.rasi".source = ./dotfiles/rofi/config.rasi;
   home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
+
   home.file.".local/share/fonts/exo2" = {
     source = "${exo2}";
     recursive = true;
@@ -47,35 +46,12 @@ in
     gtk-xft-hintstyle=hintslight
     gtk-xft-rgba=rgb
   '';
-  
-  home.file.".config/sway" = {
-    source = ./dotfiles/sway;
-    recursive = true;
-  };
-
-  home.file.".config/waybar" = {
-    source = ./dotfiles/waybar;
-    recursive = true;
-  };
-
-  home.file.".emacs.d/init.el".source = ./dotfiles/emacs/init.el;
-  
-  # home.file.".xmonad/xmonad.hs".source = ./dotfiles/xmonad/xmonad.hs;
-  # home.file.".xmobar/xmobar.hs".source = ./dotfiles/xmobar/xmobar.hs;
-  /*home.file.".local/share/icons/tela" = {
-    source = "${iconTheme}/src";
-    recursive = true;
-  };*/
 
   home.keyboard.layout = "fr";
-  
-  # home.packages = with pkgs; [
-  #   feh
-  #   haskellPackages.xmobar
-  # ];
 
   home.sessionVariables = {
     EDITOR = "emacsclient";
+    NOTMUCH_CONFIG = "${config.xdg.configHome}/notmuch/notmuchrc";
   };
   
   programs = {
@@ -96,31 +72,26 @@ in
         theme = "sorin";
       };
     };
-  };
-  
-  # services = {
-    # screen-locker = {
+    # notmuch = {
     #   enable = true;
-    #   xautolockExtraOptions = [
-    #     "-corners" "+0-0"
-    #   ];
+    #   new.tags = [ "new" "unread" ];
+    #   hooks = {};
+    #   extraConfig = {
+    #     search = {
+    #       exclude_tags = "deleted;spam;";
+    #     };
+    #   };
     # };
-    # unclutter.enable = true;
-  # };
 
-  # xresources.extraConfig = ''
-    
-  # '';
-  
-  # xsession = {
-  #   enable = true;
-  #   initExtra = ''
-  #     feh --bg-scale /home/romain/.background-image
-  #   '';
-  #   windowManager.xmonad = {
-  #     config = ./dotfiles/xmonad/xmonad.hs;
+    # mbsync.enable = true;
+    # msmtp.enable = true;
+  };
+
+  # services = {
+  #   mbsync = {
   #     enable = true;
-  #     enableContribAndExtras = true;
+  #     frequency = "*:0/15";
+  #     postExec = "${pkgs.notmuch}/bin/notmuch new";
   #   };
   # };
 }
