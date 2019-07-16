@@ -11,7 +11,7 @@ Then replace the content of your configuration file with:
 
 ```nix
 # /etc/nixos/configuration.nix
-import /path/to/local/checkout/hosts/clevo-N141ZU
+import /path/to/local/checkout/hosts/clevo-N141ZU.nix
 ```
 
 Here, **clevo-N141ZU** corresponds to an entry in the **hosts** folder.
