@@ -73,8 +73,6 @@ in
     inkscape
     krita
     nixops
-    redshift
-    vscode
   ];
 
   fonts = {
@@ -94,9 +92,34 @@ in
     enable = true;
     layout = "fr";
     xkbOptions = "ctrl:nocaps";
-    desktopManager.plasma5.enable = true;
-    displayManager.sddm = {
+    desktopManager.gnome3.enable = true;
+    displayManager.gdm = {
       enable = true;
+      wayland = false;
     };
+  };
+
+  environment.gnome3.excludePackages = with pkgs.gnome3; (lib.lists.subtractLists [
+    gnome-terminal
+    gnome-tweaks
+    nautilus
+  ] optionalPackages);
+
+  services.gnome3 = {
+    evolution-data-server.enable = lib.mkForce false;
+    gnome-disks.enable = lib.mkForce false;
+    gnome-documents.enable = lib.mkForce false;
+    gnome-keyring.enable = lib.mkForce false;
+    gnome-online-accounts.enable = lib.mkForce false;
+    gnome-online-miners.enable = lib.mkForce false;
+    gnome-remote-desktop.enable = lib.mkForce false;
+    gnome-user-share.enable = lib.mkForce false;
+    gpaste.enable = lib.mkForce false;
+    gvfs.enable = lib.mkForce false;
+    rygel.enable = lib.mkForce false;
+    seahorse.enable = lib.mkForce false;
+    sushi.enable = lib.mkForce false;
+    tracker.enable = lib.mkForce false;
+    tracker-miners.enable = lib.mkForce false;
   };
 }
