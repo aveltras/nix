@@ -65,15 +65,16 @@ in
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
-    alacritty
-    brightnessctl
     cachix
+    chromium
     emacs
     firefox
     git
     inkscape
     krita
     nixops
+    redshift
+    vscode
   ];
 
   fonts = {
@@ -86,37 +87,16 @@ in
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-  
   services.udisks2.enable = true;
-
   programs.zsh.enable = true;
-  programs.light.enable = true;
-
-  services.redshift = {
-    enable = true;
-    latitude = "45.75";
-    longitude  = "4.85";
-    temperature = {
-      day = 5000;
-      night = 3250;
-    };
-  };
 
   services.xserver = {
-    desktopManager.xterm.enable = false;
     enable = true;
     layout = "fr";
     xkbOptions = "ctrl:nocaps";
-    # displayManager.sessionCommands = "${pkgs.xorg.xhost}/bin/xhost +SI:localuser:$USER";
-    windowManager = {
-      default = "exwm";
-      session = lib.singleton {
-        name = "exwm";
-        start = ''
-          emacs --daemon -f exwm-enable
-          emacsclient -c
-        '';
-      };
+    desktopManager.plasma5.enable = true;
+    displayManager.sddm = {
+      enable = true;
     };
   };
 }

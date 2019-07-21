@@ -15,8 +15,6 @@ let
   };
 in
 {
-  home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
-
   home.file.".local/share/fonts/exo2" = {
     source = "${exo2}";
     recursive = true;
@@ -49,11 +47,6 @@ in
 
   home.keyboard.layout = "fr";
 
-  home.sessionVariables = {
-    EDITOR = "emacsclient";
-    NOTMUCH_CONFIG = "${config.xdg.configHome}/notmuch/notmuchrc";
-  };
-  
   programs = {
     home-manager.enable = true;
     direnv = {
@@ -72,26 +65,5 @@ in
         theme = "sorin";
       };
     };
-    # notmuch = {
-    #   enable = true;
-    #   new.tags = [ "new" "unread" ];
-    #   hooks = {};
-    #   extraConfig = {
-    #     search = {
-    #       exclude_tags = "deleted;spam;";
-    #     };
-    #   };
-    # };
-
-    # mbsync.enable = true;
-    # msmtp.enable = true;
   };
-
-  # services = {
-  #   mbsync = {
-  #     enable = true;
-  #     frequency = "*:0/15";
-  #     postExec = "${pkgs.notmuch}/bin/notmuch new";
-  #   };
-  # };
 }
