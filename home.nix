@@ -45,7 +45,24 @@ in
     gtk-xft-rgba=rgb
   '';
 
+  home.file.".config/sway" = {
+    source = ./dotfiles/sway;
+    recursive = true;
+  };
+
+  home.file.".config/waybar" = {
+    source = ./dotfiles/waybar;
+    recursive = true;
+  };
+
+  home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
+  
   home.keyboard.layout = "fr";
+
+  home.sessionVariables = {
+    EDITOR = "emacsclient";
+    NOTMUCH_CONFIG = "${config.xdg.configHome}/notmuch/notmuchrc";
+  };
 
   programs = {
     home-manager.enable = true;

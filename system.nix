@@ -2,6 +2,7 @@
 
 let
   homeManagerThunk = builtins.fromJSON (builtins.readFile ./home-manager.json);
+  waylandOverlay = (import (builtins.fetchTarball "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz"));
 in
 {
   imports = [
@@ -36,8 +37,26 @@ in
     plymouth.enable = true;
   };
 
+  nixpkgs.overlays = [ waylandOverlay ];
   nixpkgs.config.allowUnfree = true;
+  
+  nix.binaryCaches = [
+    "https://cache.nixos.org/"
+    "https://nixcache.reflex-frp.org"
+    "https://nixpkgs-wayland.cachix.org"
+  ];
+    
+  nix.binaryCachePublicKeys = [
+    "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
+    "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+  ];
 
+  environment.loginShellInit = ''
+    if [ "$(tty)" = "/dev/tty1" ]; then
+    	exec sway
+    fi
+  '';
+  
   home-manager.users.romain = import ./home.nix;
   
   users.users.romain = {
@@ -65,14 +84,19 @@ in
   time.timeZone = "Europe/Paris";
 
   environment.systemPackages = with pkgs; [
+    alacritty
+    bemenu
     cachix
     chromium
-    emacs
     firefox
     git
+    gnupg
     inkscape
+    j4-dmenu-desktop
     krita
     nixops
+    pass
+    weechat
   ];
 
   fonts = {
@@ -83,43 +107,65 @@ in
     ];
   };
 
+  services.redshift = {
+    enable = true;
+    package = pkgs.redshift-wayland;
+    latitude = "45.75";
+    longitude  = "4.85";
+    temperature = {
+      day = 5000;
+      night = 3250;
+    };
+  };  
+
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    package = (pkgs.emacs.overrideAttrs (attrs: {
+      postInstall = (attrs.postInstall or "") + ''
+        rm $out/share/applications/emacs.desktop
+      '';
+    }));
+  };
+  
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   services.udisks2.enable = true;
+  programs.light.enable = true;
   programs.zsh.enable = true;
 
-  services.xserver = {
+  programs.sway = {
     enable = true;
-    layout = "fr";
-    xkbOptions = "ctrl:nocaps";
-    desktopManager.gnome3.enable = true;
-    displayManager.gdm = {
-      enable = true;
-      wayland = false;
-    };
+    extraPackages = with pkgs; [
+      grim
+      redshift-wayland
+      slurp
+      swaybg
+      swayidle
+      swaylock
+      waybar
+      xwayland
+    ];
   };
 
-  environment.gnome3.excludePackages = with pkgs.gnome3; (lib.lists.subtractLists [
-    gnome-terminal
-    gnome-tweaks
-    nautilus
-  ] optionalPackages);
-
-  services.gnome3 = {
-    evolution-data-server.enable = lib.mkForce false;
-    gnome-disks.enable = lib.mkForce false;
-    gnome-documents.enable = lib.mkForce false;
-    gnome-keyring.enable = lib.mkForce false;
-    gnome-online-accounts.enable = lib.mkForce false;
-    gnome-online-miners.enable = lib.mkForce false;
-    gnome-remote-desktop.enable = lib.mkForce false;
-    gnome-user-share.enable = lib.mkForce false;
-    gpaste.enable = lib.mkForce false;
-    gvfs.enable = lib.mkForce false;
-    rygel.enable = lib.mkForce false;
-    seahorse.enable = lib.mkForce false;
-    sushi.enable = lib.mkForce false;
-    tracker.enable = lib.mkForce false;
-    tracker-miners.enable = lib.mkForce false;
-  };
+  services.xserver.enable = false;
+  
+  # services.xserver = {
+    # enable = true;
+    # layout = "fr";
+    # xkbOptions = "ctrl:nocaps";
+    # desktopManager.plasma5.enable = true;
+    # displayManager.sddm.enable = true;
+  #   desktopManager.xterm.enable = false;
+  #   windowManager = {
+  #     default = "exwm";
+  #     session = lib.singleton {
+  #       name = "exwm";
+  #       start = ''
+  #         emacs --daemon -f exwm-enable
+  #         emacsclient -c
+  #       '';
+  #     };
+  #   };
+  # };
 }
