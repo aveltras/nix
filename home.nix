@@ -70,11 +70,22 @@ in
       enable = true;
       stdlib = pkgs.lib.fileContents ./dotfiles/direnvrc;
     };
+    emacs = {
+      enable = true;
+      package = (pkgs.emacs.overrideAttrs (attrs: {
+        postInstall = (attrs.postInstall or "") + ''
+          rm $out/share/applications/emacs.desktop
+        '';
+      }));
+    };
     git = {
       enable = true;
       userName = "Romain Viallard";
       userEmail = "romain.viallard@outlook.fr";
     };
+    mbsync.enable = true;
+    msmtp.enable = true;
+    notmuch.enable = true;
     zsh = {
       enable = true;
       oh-my-zsh = {
@@ -82,5 +93,49 @@ in
         theme = "sorin";
       };
     };
+  };
+
+  accounts.email = {
+    maildirBasePath = ".maildir";
+    accounts = lib.mapAttrs (name: value: (lib.mkMerge [
+      value
+      {
+        mbsync = {
+          enable = true;
+          create = "maildir";
+        };
+        msmtp.enable = true;
+        notmuch.enable = true;
+      }
+      (lib.mkIf (name == "outlook") {
+        imap = {
+          host = "outlook.office365.com";
+        };
+
+        smtp = {
+          host = "smtp.office365.com";
+          port = 587;
+        };
+      })
+    ])) (builtins.fromJSON (builtins.readFile ./mail.json));
+  };
+  
+  services.mbsync =  {
+    enable = true;
+    frequency = "*:0/5";
+    postExec = "${pkgs.notmuch}/bin/notmuch --config=${config.xdg.configHome}/notmuch/notmuchrc new";
+  };
+
+  services.emacs.enable = true;
+  
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 3600;
+    enableSshSupport = true;
+    maxCacheTtlSsh = 3600;
+    extraConfig = ''
+      allow-emacs-pinentry
+      allow-loopback-pinentry
+    '';
   };
 }

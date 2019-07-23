@@ -56,6 +56,10 @@ in
     	exec sway
     fi
   '';
+
+  environment.variables = {
+    NOTMUCH_CONFIG = "/home/romain/.config/notmuch/notmuchrc";
+  };
   
   home-manager.users.romain = import ./home.nix;
   
@@ -106,7 +110,7 @@ in
       iosevka-bin
     ];
   };
-
+  
   services.redshift = {
     enable = true;
     package = pkgs.redshift-wayland;
@@ -118,16 +122,6 @@ in
     };
   };  
 
-  services.emacs = {
-    enable = true;
-    defaultEditor = true;
-    package = (pkgs.emacs.overrideAttrs (attrs: {
-      postInstall = (attrs.postInstall or "") + ''
-        rm $out/share/applications/emacs.desktop
-      '';
-    }));
-  };
-  
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   services.udisks2.enable = true;
