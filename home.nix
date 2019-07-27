@@ -47,21 +47,10 @@ in
 
   home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
 
-  home.file.".config/sway" = {
-    source = ./dotfiles/sway;
-    recursive = true;
-  };
-
-  home.file.".config/waybar" = {
-    source = ./dotfiles/waybar;
-    recursive = true;
-  };
-  
   home.keyboard.layout = "fr";
 
   home.sessionVariables = {
     EDITOR = "emacsclient";
-    NOTMUCH_CONFIG = "${config.xdg.configHome}/notmuch/notmuchrc";
   };
 
   programs = {
@@ -70,14 +59,14 @@ in
       enable = true;
       stdlib = pkgs.lib.fileContents ./dotfiles/direnvrc;
     };
-    emacs = {
-      enable = true;
-      package = (pkgs.emacs.overrideAttrs (attrs: {
-        postInstall = (attrs.postInstall or "") + ''
-          rm $out/share/applications/emacs.desktop
-        '';
-      }));
-    };
+    # emacs = {
+    #   enable = true;
+    #   package = (pkgs.emacs.overrideAttrs (attrs: {
+    #     postInstall = (attrs.postInstall or "") + ''
+    #       rm $out/share/applications/emacs.desktop
+    #     '';
+    #   }));
+    # };
     git = {
       enable = true;
       userName = "Romain Viallard";
@@ -126,7 +115,7 @@ in
     postExec = "${pkgs.notmuch}/bin/notmuch --config=${config.xdg.configHome}/notmuch/notmuchrc new";
   };*/
 
-  services.emacs.enable = true;
+  # services.emacs.enable = true;
   
   services.gpg-agent = {
     enable = true;
