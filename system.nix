@@ -73,6 +73,7 @@ in
 
   environment.systemPackages = with pkgs; [
     alacritty
+    ark
     cachix
     chromium
     emacs
@@ -109,6 +110,8 @@ in
       night = 3250;
     };
   };
+
+  services.gnome3.gnome-keyring.enable = true;
   
   services.xserver = {
     enable = true;
