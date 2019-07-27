@@ -136,3 +136,4 @@ exec swayidle -w \
 
 include @sysconfdir@/sway/config.d/*
 exec systemctl --user start graphical-session.target
+exec mako --default-timeout=5000 --ignore-timeout=0

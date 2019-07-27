@@ -21,7 +21,7 @@ window#waybar {
 
 #workspaces button.focused {
     background: #343c41;
-    border-bottom: 3px solid #FF5500;
+    border-bottom: 3px solid #4fc3e3;
     color: #EFEFEF;
 }
 
@@ -30,7 +30,7 @@ window#waybar {
 }
 
 #clock {
-    color: #FF5500;
+    color: #4fc3e3;
 }
 
 #mode {

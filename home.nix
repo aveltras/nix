@@ -45,6 +45,8 @@ in
     gtk-xft-rgba=rgb
   '';
 
+  home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
+
   home.file.".config/sway" = {
     source = ./dotfiles/sway;
     recursive = true;
@@ -54,8 +56,6 @@ in
     source = ./dotfiles/waybar;
     recursive = true;
   };
-
-  home.file.".config/alacritty/alacritty.yml".source = ./dotfiles/alacritty.yml;
   
   home.keyboard.layout = "fr";
 
@@ -83,9 +83,9 @@ in
       userName = "Romain Viallard";
       userEmail = "romain.viallard@outlook.fr";
     };
-    mbsync.enable = true;
-    msmtp.enable = true;
-    notmuch.enable = true;
+    #mbsync.enable = true;
+    #msmtp.enable = true;
+    #notmuch.enable = true;
     zsh = {
       enable = true;
       oh-my-zsh = {
@@ -95,7 +95,7 @@ in
     };
   };
 
-  accounts.email = {
+  /*accounts.email = {
     maildirBasePath = ".maildir";
     accounts = lib.mapAttrs (name: value: (lib.mkMerge [
       value
@@ -124,7 +124,7 @@ in
     enable = true;
     frequency = "*:0/5";
     postExec = "${pkgs.notmuch}/bin/notmuch --config=${config.xdg.configHome}/notmuch/notmuchrc new";
-  };
+  };*/
 
   services.emacs.enable = true;
   

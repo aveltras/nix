@@ -2,7 +2,11 @@
 
 let
   homeManagerThunk = builtins.fromJSON (builtins.readFile ./home-manager.json);
-  waylandOverlay = (import (builtins.fetchTarball "https://github.com/colemickens/nixpkgs-wayland/archive/master.tar.gz"));
+  nixWaylandThunk = builtins.fromJSON (builtins.readFile ./nixpkgs-wayland.json);
+  waylandOverlay = (import (builtins.fetchTarball {
+    url = "https://github.com/colemickens/nixpkgs-wayland/archive/${nixWaylandThunk.rev}.tar.gz";
+    sha256 = nixWaylandThunk.sha256;
+  }));
 in
 {
   imports = [
@@ -24,9 +28,7 @@ in
       fsType = "vfat";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-label/swap"; }
-    ];
+  swapDevices = [ ];
   
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -56,7 +58,7 @@ in
     	exec sway
     fi
   '';
-
+  
   environment.variables = {
     NOTMUCH_CONFIG = "/home/romain/.config/notmuch/notmuchrc";
   };
@@ -98,19 +100,11 @@ in
     inkscape
     j4-dmenu-desktop
     krita
+    libnotify
     nixops
     pass
-    weechat
   ];
 
-  fonts = {
-    fontconfig.enable = true;
-    fonts = with pkgs; [
-      fantasque-sans-mono
-      iosevka-bin
-    ];
-  };
-  
   services.redshift = {
     enable = true;
     package = pkgs.redshift-wayland;
@@ -120,10 +114,19 @@ in
       day = 5000;
       night = 3250;
     };
-  };  
-
+  };
+  
+  fonts = {
+    fontconfig.enable = true;
+    fonts = with pkgs; [
+      fantasque-sans-mono
+      font-awesome_5
+      iosevka-bin
+    ];
+  };
+  
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  # hardware.pulseaudio.enable = true;
   services.udisks2.enable = true;
   programs.light.enable = true;
   programs.zsh.enable = true;
@@ -132,6 +135,7 @@ in
     enable = true;
     extraPackages = with pkgs; [
       grim
+      mako
       redshift-wayland
       slurp
       swaybg
@@ -143,23 +147,4 @@ in
   };
 
   services.xserver.enable = false;
-  
-  # services.xserver = {
-    # enable = true;
-    # layout = "fr";
-    # xkbOptions = "ctrl:nocaps";
-    # desktopManager.plasma5.enable = true;
-    # displayManager.sddm.enable = true;
-  #   desktopManager.xterm.enable = false;
-  #   windowManager = {
-  #     default = "exwm";
-  #     session = lib.singleton {
-  #       name = "exwm";
-  #       start = ''
-  #         emacs --daemon -f exwm-enable
-  #         emacsclient -c
-  #       '';
-  #     };
-  #   };
-  # };
 }
